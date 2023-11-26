@@ -1,0 +1,26 @@
+{
+  "name": "ads",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "destroy": "^1.2.0",
+    "ejs": "~2.6.1",
+    "express": "^4.18.2",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "mssql": "^10.0.1",
+    "mysql2": "^3.6.2",
+    "oracledb": "^6.2.0",
+    "pg": "^8.11.3"
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
