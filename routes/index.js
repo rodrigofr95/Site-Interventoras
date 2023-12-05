@@ -8,24 +8,7 @@ router.get('/', function(req, res, next) {
   res.render('sign-in', { });
 });
 
-router.get('/interventoras', async function(req, res, next) {
-  // CONSULTAR
-  let listaLabs = await inRepository.consultarCad();
-  console.log(listaLabs);
-  res.render('interventorasList', { laboratorios: listaLabs });
-});
 
-router.get('/addinterventoras', (req, res, next)=>{
-  res.render('interventorasPage',{});
-});
-
-router.get('/deletelab', async (req, res, next)=>{
-  const id = req.query.id;
-  console.log(id);
-  await inRepository.apagarLab(id);
-  let listaLabs = await inRepository.consultarLab();
-  res.render('interventorasList', { interventoras: listaLabs });
-});
 
 router.post('/createCad', function(req, res, next) {
   let { nome, email, senha } = req.body;

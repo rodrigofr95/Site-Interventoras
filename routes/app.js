@@ -4,76 +4,80 @@ const path = require('path');
 const homeRouter = require('./routes/home');
 
 
-
 const app = express();
 const port = 3000;
 
-// Configurando o middleware para analisar os corpos das solicitações como JSON
+// Configuring middleware to parse request bodies as JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/home', homeRouter);
 
-// Configura o motor de visualização EJS
+// Configuring the EJS view engine
 app.set('view engine', 'ejs');
 
-// Define o diretório de visualizações
+// Setting the views directory
 app.set('views', path.join(__dirname, 'views'));
 
-// Rota para a página home (GET)
+// Route for the home page (GET)
 app.get('/home', (req, res) => {
-    // Recupere os parâmetros de consulta, se necessário
-    const { email, senha, lembrarme } = req.query;
+    // Retrieve query parameters if necessary
+    const { Email, Senha, lembrarme } = req.query;
     res.render('home', {});
 });
-// Inclua a rota para a página home
-const homeRouter = require('./home'); // Substitua pelo caminho real do seu arquivo
+
+// Include the route for the home page
 app.use('/', homeRouter);
 
+// Route to process the login form (POST)
+app.post('/sign-in', (req, res, next) => {
+    const { Email, Senha } = req.body;
 
-// Rota para processar o formulário de login (POST)
-app.post('/login', (req, res, next) => {
-    // Lógica de processamento do formulário de login, se necessário
-
-    // Redireciona para a página home após o processamento do formulário
-    res.redirect('home');
+    // Check the credentials (for demonstration purposes)
+    if (Email === 'user@example.com' && Senha === 'password') {
+        // Authentication successful, redirect to the home page
+        res.redirect('/home');
+    } else {
+        // Authentication failed, redirect to login page or show an error
+        res.redirect('/home'); // Adjust this accordingly
+    }
 });
-
-// Conectar ao banco de dados
+app.post('./db', (req, res) => {
+    // Lógica para lidar com a solicitação POST para /db
+  });
+  
+// Connect to the database
 require('./db');
 
-// Rota para a página de cadastro
+// Route for the registration page
 app.get('/cadastro', (req, res) => {
     res.render('cadastro');
 });
 
-// Rota POST para processar o formulário de cadastro
+// Route POST to process the registration form
 app.post('/cadastro', (req, res) => {
     const nome = req.body.nome;
     const email = req.body.email;
     const senha = req.body.senha;
     const lembrarme = req.body.lembrarme;
 
-    // Lógica para lidar com os dados do formulário, por exemplo, inserir no banco de dados
+    // Logic to handle form data, e.g., insert into the database
 
     res.send('Cadastro recebido com sucesso!');
 });
 
-// ...
-// catch 404 and forward to error handler
+// Handling 404 errors
 app.use(function(req, res, next) {
     console.log(`Rota não encontrada: ${req.originalUrl}`);
     next(createError(404));
 });
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
-    console.error(err.stack); // Log detalhes do erro
+    console.error(err.stack); // Log error details
     res.status(500).send('Algo deu errado!');
 });
 
-// ...
-
-// Iniciar o servidor
+// Starting the server
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${3000}`);
 });

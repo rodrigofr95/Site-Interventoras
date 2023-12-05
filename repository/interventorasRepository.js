@@ -1,31 +1,32 @@
 const db = require('./db');
 
-async function criarcadastro(Nome, Email, Senha) {
+
+async function criarcadastro(nome, email, senha) {
     let con;
     try {
         con = await db.conectarMysql();
-        let sql = 'INSERT INTO pmc.cadastrodeusuario (Nome, Email, Senha) VALUES (?, ?, ?)';
-        await con.execute(sql, [Nome, Email, Senha]);
-        console.log("inseriu");
+        const sql = 'INSERT INTO pmc.cadastrodeusuario (Nome, Email, Senha) VALUES (?, ?, ?)';
+        await con.execute(sql, [nome, email, senha]);
+        console.log("Inseriu");
         return true;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
     } finally {
         if (con) con.destroy();
     }
 }
 
-async function updateinter(id, Nome, Email, Senha) {
+async function updateinter(id, nome, email, senha) {
     let con;
     try {
         con = await db.conectarMysql();
-        let sql = 'UPDATE pmc.cadastrodeusuario SET nome=?, email=?, senha=? WHERE id=?';
-        await con.execute(sql, [Nome, Email, Senha, id]);
-        console.log("atualizou");
+        const sql = 'UPDATE pmc.cadastrodeusuario SET Nome=?, Email=?, Senha=? WHERE id=?';
+        await con.execute(sql, [nome, email, senha, id]);
+        console.log("Atualizou");
         return true;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
     } finally {
         if (con) con.destroy();
@@ -42,7 +43,7 @@ async function consultarLab() {
         console.log(listaLabs);
         return listaLabs;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
     } finally {
         if (con) con.destroy();
@@ -59,7 +60,7 @@ async function getLab(id) {
         console.log(lab);
         return lab;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
     } finally {
         if (con) con.destroy();
@@ -74,7 +75,7 @@ async function apagarLab(id) {
         await con.execute(consulta, [id]);
         return true;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
     } finally {
         if (con) con.destroy();
